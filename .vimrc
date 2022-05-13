@@ -4,7 +4,7 @@
 "   Author        : wander
 "   Email         : wander@ffactory.org
 "   File Name     : .vimrc
-"   Last Modified : 2022-05-06 15:39
+"   Last Modified : 2022-05-13 14:06
 "   Describe      : 
 "
 " ====================================================
@@ -82,10 +82,23 @@ set expandtab       " Expand TABs to spaces
 " set guifont=Hack:h15
 " set guifont=Hack:h18
 " set guifont=Go_Mono:h15
-set guifont=Go_Mono:h15
+set guifont=Go_Mono:h13
 " set guifont=JetBarains_Mono:h18
 " VIM-GO CONFIGS
 " 设置快捷键
+" coc.vim tab候选列表项
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " 模式下
 let mapleader="\<space>"
 " autocmd FileType go nmap gr :GoReferrers<CR>
@@ -132,6 +145,7 @@ autocmd FileType go,rust,c,cpp,objc,objcpp,cuda,java,javascript,python,typescrip
 autocmd FileType go,rust,c,cpp,objc,objcpp,cuda,java,javascript,python,typescript nmap gd <Plug>(coc-definition)
 autocmd FileType go,rust,cs,java,typescript,javascript nmap gi <Plug>(coc-implementation)
 autocmd FileType go,rust,c,cpp,objc,objcpp,cuda,java,javascript,python,typescript,cs nmap rn <Plug>(coc-rename)
+" autocmd FileType go,rust,c,cpp,objc,objcpp,cuda,java,javascript,python,typescript,cs nmap rf <Plug>(coc-refactor)
 autocmd FileType go,c,cpp,objc,objcpp,cuda,java,javascript,python,typescript,cs nmap <C-m> :cprevious<CR>
 autocmd FileType go,c,cpp,objc,objcpp,cuda,java,javascript,python,typescript,cs nmap <C-n> :cnext<CR>
 autocmd FileType go,c,cpp,objc,objcpp,cuda,java,javascript,python,typescript,cs nmap ca :cclose<CR>
@@ -186,10 +200,10 @@ let g:NERDDefaultAlign = 'left'  "将行注释符左对齐
 set laststatus=2 " 始终显示状态栏
 " let g:airline_theme='materialmonokai'
 " let g:airline_theme='oceanicnext'
- " let g:airline_theme='oceanicnext'
 
 " let g:airline_theme='bubblegum'
 let g:airline_theme='one'
+" let g:airline_theme='toast.vim'
 " let g:airline_theme='molokai'
 " let g:airline_theme='base16'
 " let g:airline_theme='laederon'
@@ -318,6 +332,7 @@ Plug 'mhinz/vim-startify' "启动欢迎页
 Plug 'nine2/vim-copyright' "自动增加作者信息
 Plug 'mhartington/oceanic-next' "配色主题
 Plug 'rakr/vim-one' "配色主题
+Plug 'jsit/toast.vim' "配色主题
 Plug 'skielbasa/vim-material-monokai' "配色主题
 Plug 'fatih/molokai' "配色主题
 Plug 'lifepillar/vim-solarized8' "配色主题
@@ -330,11 +345,7 @@ Plug 'vim-airline/vim-airline' "状态栏插件
 Plug 'vim-airline/vim-airline-themes' "状态栏主题包
 " Use release branch (recommend)
 Plug 'https://gitee.com/ovoll/coc.nvim.git', {'branch': 'release'}
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
 " Plug 'ycm-core/YouCompleteMe' "代码补全插件
-" Plug 'Shougo/neocomplete.vim' "代码补全插件
 " Plug 'https://gitee.com/you-complete-me/YouCompleteMe.git' "代码补全插件
 Plug 'tpope/vim-fugitive' "git插件
 Plug 'junegunn/gv.vim' "git提交记录浏览器
@@ -367,15 +378,16 @@ syntax on
 set t_Co=256
 
 " enable true color
-if (has("termguicolors"))
-    set termguicolors
-endif
+" if (has("termguicolors"))
+    " set termguicolors
+" endif
  
-set background=dark 
+" set background=dark 
 " set background=light
-" set termguicolors
-colorscheme  one 
-" colorscheme  OceanicNext 
+set termguicolors
+" colorscheme  toast 
+" colorscheme  one
+colorscheme  OceanicNext 
 " let g:oceanic_next_terminal_bold = 1
 " let g:oceanic_next_terminal_italic = 1 "斜体注释会有影响
 " colorscheme  solarized8 
